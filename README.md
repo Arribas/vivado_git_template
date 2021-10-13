@@ -9,7 +9,7 @@ SPDX-FileCopyrightText: 2021 Javier Arribas Lázaro <jarribas@cttc.es>
 <!-- prettier-ignore-end -->
 
 # Introduction
-This repository contains a simple procedure for managing Xilinx Vivado projects with GIT. It is not invasive in the sense that it does not require any custom write_to_tcl script or any Vivado init modification. It uses what it comes with Vivado and a simple shell scripts. I tested it with Vivado 2018.3 and it comes with absolutely no warranty. The ultimate goal is *painless* restore of Vivado projects in different computers with different users/folders structure.
+This repository contains a simple procedure for managing Xilinx Vivado projects with GIT. It is not invasive in the sense that it does not require any custom write_to_tcl script or any Vivado init modification. It uses what it comes with Vivado and a simple shell scripts. I tested it with Vivado 2018.3 and it comes with absolutely no warranty. The ultimate goal is a *painless* restore of Vivado projects in different computers with different users/folders structure.
 
 Good luck and happy VHDL coding!
 
@@ -25,7 +25,7 @@ my_project_name*
 vivado*
 ```
 
-This will avoid adding the auto-generated project files with the exception of the TCL write_project script.
+This will avoid adding the auto-generated project files with the exception of the generated TCL project script obtained using Vivado write_project_tcl.
 
 4. create the following directory structure:
 
@@ -60,10 +60,16 @@ In this way the project will be created in a subdirectory called my_project_name
 * Board Designs should also be created in their corresponding dedicated subfolder in ./src tree. Only the .bd file is required to be stored in GIT (see next Section for further details)
 
 7. When the project is verified and ready to be uploaded to GIT, generate the Vivado project TCL script by executing the following TCL command from the the GIT project root folder (e.g. ~/git/my_project_name, double check it by executing pwd command!)
+
 ```
 set proj_file [current_project].tcl
 write_project_tcl -no_copy_sources -force $proj_file
+```
+
 OR if the design contains BD files
+
+```
+set proj_file [current_project].tcl
 write_project_tcl -no_copy_sources -use_bd_files -force $proj_file
 ```
 
